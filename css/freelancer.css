@@ -18,7 +18,7 @@ a.active,
 a:active,
 a:focus,
 a:hover {
-  color: #FFD700;
+  color: rgb(55, 141, 255); /*This is the colour for Hyperlink text EX About Us Facebook Link*/
   outline: none; }
 
 h1,
