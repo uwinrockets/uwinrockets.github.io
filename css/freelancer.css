@@ -134,44 +134,7 @@ section.success {
       background-color: #FFD700; }
 
 
-#mainNav ul li{
-  float: left;
-  list-style: none;
-  position: relative;
 
-}
-
-#mainNav ul li ul{
-  display: none;
-  position: absolute;
-  background-color: rgb(55, 141, 255);
-  padding: 10px;
-  border-radius: 0px 0px 6px 6px;
-}
-
-#mainNav ul li:hover ul{
-  display: block;
-}
-
-#mainNav ul li ul li{
-  width: 150px;
-  border-radius: 4px;
-  background-color: rgb(55, 141, 255);
-  color: black;
-  
-}
-
-#mainNav ul li ul li a{
-  padding: 20px x 20px;
-  color: black;
-
-
-}
-
-#mainNav ul li ul li a:hover{
-  background-color: rgb(71, 104, 255);
-
-}
 
 @media (min-width: 992px) {
   #mainNav {
@@ -197,6 +160,8 @@ section.success {
     padding-bottom: 10px; }
     #mainNav.navbar-shrink .navbar-brand {
       font-size: 1.5em; } }
+
+
 
 header.masthead {
   padding-top: 100px;
@@ -225,7 +190,46 @@ header.masthead {
       font-size: 4.75em; }
     header.masthead .intro-text .skills {
       font-size: 1.75em; } }
+      
 
+      #mainNav ul li{
+        float: left;
+        list-style: none;
+        position: relative;
+      
+      }
+      
+      #mainNav ul li ul{
+        display: none;
+        position: absolute;
+        background-color: rgb(55, 141, 255);
+        padding: 10px;
+        border-radius: 0px 0px 6px 6px;
+      }
+      
+      #mainNav ul li:hover ul{
+        display: block;
+      }
+      
+      #mainNav ul li ul li{
+        width: 150px;
+        border-radius: 4px;
+        background-color: rgb(55, 141, 255);
+        color: black;
+        
+      }
+      
+      #mainNav ul li ul li a{
+        padding: 20px x 20px;
+        color: black;
+      
+      
+      }
+      
+      #mainNav ul li ul li a:hover{
+        background-color: rgb(71, 104, 255);
+      
+      }
 
 .floating-label-form-group {
   position: relative;
