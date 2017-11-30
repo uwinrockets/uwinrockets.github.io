@@ -138,8 +138,8 @@ section.success {
 
 @media (min-width: 992px) {
   #mainNav {
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
     -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
     transition: padding-top 0.3s, padding-bottom 0.3s; }
@@ -156,8 +156,8 @@ section.success {
         color: black;
         background: #FFD700; }
   #mainNav.navbar-shrink {
-    padding-top: 10px;
-    padding-bottom: 10px; }
+    padding-top: 3px;
+    padding-bottom: 3px; }
     #mainNav.navbar-shrink .navbar-brand {
       font-size: 1.5em; } }
 
@@ -198,6 +198,11 @@ header.masthead {
         position: relative;
       
       }
+
+      #mainNav ul li a{
+        text-decoration: none;
+      
+      }
       
       #mainNav ul li ul{
         display: none;
@@ -227,7 +232,7 @@ header.masthead {
       }
       
       #mainNav ul li ul li a:hover{
-        background-color: rgb(71, 104, 255);
+        background-color: rgb(104, 157, 255);
       
       }
 
