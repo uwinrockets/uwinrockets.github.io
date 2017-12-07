@@ -232,9 +232,104 @@ header.masthead {
       }
       
       #mainNav ul li ul li a:hover{
-        background-color: rgb(104, 157, 255);
+        background-color: #FFD700;
       
       }
+
+
+      #buttons {
+        display: block;
+
+      }
+
+      .button{
+        background-color: rgb(55, 141, 255);
+        width: 160px;
+        height: 60px;
+        color: white;
+        outline: none;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        
+        
+      }
+      
+      a { color: inherit; } 
+
+      .block-display button{
+        margin-bottom:2px;
+        display:block;
+      }
+      
+      .button:hover{
+        background-color: #FFD700;
+        font-size: 20px;
+        transition: 0.5s;
+      }
+
+
+      
+      figure { 
+        display: block;
+        
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    figure2 { 
+      display: block;
+      float: right;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      margin-left: 40px;
+      margin-right: 40px;
+  }
+
+      figcaption{
+        color: rgb(29, 29, 126);
+        font-size: 20px;
+        font-family: 'Montserrat';
+
+      }
+
+
+
+      .image { 
+        position: relative; 
+        width: 100%; /* for IE 6 */
+     }
+     
+     h10 { 
+        position: absolute; 
+        top: 200px; 
+        left: 0; 
+        width: 100%; 
+     }
+
+
+     h10 span { 
+      color: white; 
+      font: bold 24px/45px Helvetica, Sans-Serif; 
+      letter-spacing: -1px;  
+      background: rgb(0, 0, 0); /* fallback color */
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px; 
+   }
+
+   h10 span.spacer {
+    padding:0 5px;
+ }
+
+
+
+
+
+
+
 
 .floating-label-form-group {
   position: relative;
