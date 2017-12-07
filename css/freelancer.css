@@ -237,10 +237,6 @@ header.masthead {
       }
 
 
-      #buttons {
-        display: block;
-
-      }
 
       .button{
         background-color: rgb(55, 141, 255);
@@ -252,7 +248,8 @@ header.masthead {
         border: none;
         cursor: pointer;
         text-align: center;
-        
+		position: fixed;
+		display: block;
         
       }
       
@@ -269,6 +266,7 @@ header.masthead {
         transition: 0.5s;
       }
 
+	  
 
       
       figure { 
@@ -296,6 +294,7 @@ header.masthead {
 
       }
 
+	  
 
 
       .image { 
@@ -305,7 +304,7 @@ header.masthead {
      
      h10 { 
         position: absolute; 
-        top: 200px; 
+        top: 225px; 
         left: 0; 
         width: 100%; 
      }
