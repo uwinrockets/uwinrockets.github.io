@@ -73,6 +73,10 @@ section {
     font-size: 3em;
     margin: 0; }
 
+    section id {
+      padding: 14px 0; }
+      
+
 section.success {
   color: black;
   background: #FFD700; }
@@ -240,34 +244,43 @@ header.masthead {
 
       .button{
         background-color: rgb(55, 141, 255);
-        width: 160px;
-        height: 60px;
+        width: 180px;
+        height: 40px;
         color: white;
-        outline: none;
+       
         font-size: 16px;
         border: none;
-        cursor: pointer;
-     
-        right: 0;
+      
+        right: 150px;
         text-align: center;
-		position: fixed;
-		display: block;
+	  	  position: fixed;
+        display: block;
+        
+        
         
       }
       
-      a { color: inherit; } 
+      .button a { color: inherit; display: block;} 
 
       .block-display button{
         margin-bottom:2px;
         display:block;
+        
       }
       
       .button:hover{
         background-color: #FFD700;
         font-size: 20px;
-        transition: 0.5s;
+        transition: 0.3s;
+        
+        text-decoration: none;
+        
       }
 
+      .button:hover a{
+        text-decoration: none;
+        color: white;
+      }
 	  
 
       
@@ -324,6 +337,14 @@ header.masthead {
    h10 span.spacer {
     padding:0 5px;
  }
+
+
+ h7 {
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;  
+  font-weight: 700;
+  font-size: 2em;
+  text-transform: uppercase;
+  margin-top: -115px; padding-top: 115px;}
 
 
 
