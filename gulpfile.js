@@ -1,112 +1,107 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var browserSync = require('browser-sync').create();
-var header = require('gulp-header');
-var cleanCSS = require('gulp-clean-css');
-var rename = require("gulp-rename");
-var uglify = require('gulp-uglify');
-var filter = require('gulp-filter');
-var pkg = require('./package.json');
+// --------------------------------------------------
+// [Gulpfile]
+// --------------------------------------------------
 
-// Set the banner content
-var banner = ['/*!\n',
-  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
-  ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
-  ' * Licensed under <%= pkg.license %> (https://github.com/BlackrockDigital/<%= pkg.name %>/blob/master/LICENSE)\n',
-  ' */\n',
-  ''
-].join('');
+'use strict';
+ 
+var gulp 		= require('gulp'),
+	sass 		= require('gulp-sass'),
+	changed 	= require('gulp-changed'),
+	cleanCSS 	= require('gulp-clean-css'),
+	rtlcss 		= require('gulp-rtlcss'),
+	rename 		= require('gulp-rename'),
+	uglify 		= require('gulp-uglify'),
+	pump 		= require('pump'),
+	htmlhint  	= require('gulp-htmlhint');
 
-// Compiles SCSS files from /scss into /css
-gulp.task('sass', function() {
-  return gulp.src('scss/freelancer.scss')
-    .pipe(sass())
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
-    .pipe(gulp.dest('css'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
+
+// Gulp plumber error handler
+function errorLog(error) {
+	console.error.bind(error);
+	this.emit('end');
+}
+
+
+// --------------------------------------------------
+// [Libraries]
+// --------------------------------------------------
+
+// Sass - Compile Sass files into CSS
+gulp.task('sass', function () {
+	gulp.src('../HTML/sass/**/*.scss')
+		.pipe(changed('../HTML/css/'))
+		.pipe(sass({ outputStyle: 'expanded' }))
+		.on('error', sass.logError)
+		.pipe(gulp.dest('../HTML/css/'));
 });
 
-// Minify compiled CSS
-gulp.task('minify-css', ['sass'], function() {
-  return gulp.src('css/freelancer.css')
-    .pipe(cleanCSS({
-      compatibility: 'ie8'
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest('css'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
+
+// Minify CSS
+gulp.task('minify-css', function() {
+	// Theme
+    gulp.src(['../HTML/css/layout.css', '!../HTML/css/layout.min.css'])
+        .pipe(cleanCSS({debug: true}, function(details) {
+            console.log(details.name + ': ' + details.stats.originalSize);
+            console.log(details.name + ': ' + details.stats.minifiedSize);
+        }))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('../HTML/css/'));
+
+    // RTL
+    gulp.src(['../HTML/css/layout-rtl.css', '!../HTML/css/layout-rtl.min.css'])
+        .pipe(cleanCSS({debug: true}, function(details) {
+            console.log(details.name + ': ' + details.stats.originalSize);
+            console.log(details.name + ': ' + details.stats.minifiedSize);
+        }))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('../HTML/css/'));
 });
 
-// Minify custom JS
-gulp.task('minify-js', function() {
-  return gulp.src('js/freelancer.js')
-    .pipe(uglify())
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest('js'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
+
+// RTL CSS - Convert LTR CSS to RTL.
+gulp.task('rtlcss', function () {
+	gulp.src(['../HTML/css/layout.css', '!../HTML/css/layout.min.css', '!../HTML/css/layout-rtl.css', '!../HTML/css/layout-rtl.min.css'])
+	.pipe(changed('../HTML/css/'))
+		.pipe(rtlcss())
+		.pipe(rename({ suffix: '-rtl' }))
+		.pipe(gulp.dest('../HTML/css/'));
 });
 
-// Copy vendor files from /node_modules into /vendor
-// NOTE: requires `npm install` before running!
-gulp.task('copy', function() {
-  gulp.src([
-      'node_modules/bootstrap/dist/**/*',
-      '!**/npm.js',
-      '!**/bootstrap-theme.*',
-      '!**/*.map'
-    ])
-    .pipe(gulp.dest('vendor/bootstrap'))
 
-  gulp.src(['node_modules/jquery/dist/jquery.js', 'node_modules/jquery/dist/jquery.min.js'])
-    .pipe(gulp.dest('vendor/jquery'))
+// Minify JS - Minifies JS
+gulp.task('uglify', function (cb) {
+  	pump([
+	        gulp.src(['../HTML/js/**/*.js', '!../HTML/js/**/*.min.js']),
+	        uglify(),
+			rename({ suffix: '.min' }),
+	        gulp.dest('../HTML/js/')
+		],
+		cb
+	);
+});
 
-  gulp.src(['node_modules/jquery.easing/*.js'])
-    .pipe(gulp.dest('vendor/jquery-easing'))
 
-  gulp.src([
-      'node_modules/font-awesome/**',
-      '!node_modules/font-awesome/**/*.map',
-      '!node_modules/font-awesome/.npmignore',
-      '!node_modules/font-awesome/*.txt',
-      '!node_modules/font-awesome/*.md',
-      '!node_modules/font-awesome/*.json'
-    ])
-    .pipe(gulp.dest('vendor/font-awesome'))
-})
+// Htmlhint - Validate HTML
+gulp.task('htmlhint', function() {
+	gulp.src('../HTML/*.html')
+		.pipe(htmlhint())
+		.pipe(htmlhint.reporter())
+	  	.pipe(htmlhint.failReporter({ suppress: true }))
+});
 
-// Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy']);
 
-// Configure the browserSync task
-gulp.task('browserSync', function() {
-  browserSync.init({
-    server: {
-      baseDir: ''
-    },
-  })
-})
+// --------------------------------------------------
+// [Gulp Task - Watch]
+// --------------------------------------------------
 
-// Dev task with browserSync
-gulp.task('dev', ['browserSync', 'sass', 'minify-css', 'minify-js'], function() {
-  gulp.watch('scss/*.scss', ['sass']);
-  gulp.watch('css/*.css', ['minify-css']);
-  gulp.watch('js/*.js', ['minify-js']);
-  // Reloads the browser whenever HTML or JS files change
-  gulp.watch('*.html', browserSync.reload);
-  gulp.watch('js/**/*.js', browserSync.reload);
+// Lets us type "gulp" on the command line and run all of our tasks
+gulp.task('default', ['sass', 'minify-css', 'rtlcss', 'uglify', 'htmlhint', 'watch']);
+
+// This handles watching and running tasks
+gulp.task('watch', function () {
+    gulp.watch('../HTML/sass/**/*.scss', ['sass']);
+    gulp.watch('../HTML/css/layout.css', ['minify-css']);
+    gulp.watch('../HTML/css/layout.css', ['rtlcss']);
+    gulp.watch('../HTML/js/**/*.js', ['uglify']);
+    gulp.watch('../HTML/*.html', ['htmlhint']);
 });
