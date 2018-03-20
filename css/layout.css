@@ -1568,3 +1568,8 @@ fieldset[disabled] .btn-theme {
   padding: 1 px;
 }
 
+.fb-page, 
+.fb-page span, 
+.fb-page span iframe[style] { 
+    width: 100% !important; 
+}
